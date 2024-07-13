@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="light-theme">
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <div class="sidebar-sticky">
+                    <h2 class="sidebar-title">CRM</h2>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" onclick="showSection('dashboard')">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('contacts')">
+                                Контакты
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('partners')">
+                                Контрагенты
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('employees')">
+                                Сотрудники
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('products')">
+                                Товары
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('tasks')">
+                                Задачи
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('orders')">
+                                Заказы
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('mails')">
+                                Почта
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('account')">
+                                Аккаунт
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('support')">
+                                Support
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="modal" data-target="#settingsModal">
+                                Настройки
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+            <div class="notification">
+                <!-- the viewBox is 79x79 due to
+                    - the size of the graphic, 65x75
+                    - the stroke width, 4x4
+                    - the empty space included on either side of the graphic to avoid cropping when rotating the bell's shape 10x0
+                -->
+                <svg class="notification__bell" viewBox="0 0 79 79" width="79" height="79">
+                    <!-- group to apply default styles -->
+                    <g
+                        stroke="currentColor"
+                        stroke-width="4">
+                        <!-- group to translate the graphic enough to avoid cropping of the stroke -->
+                        <g transform="translate(2 2)">
+                            <!-- group to center the elements in the 75x75 box allocated to the bell
+                            ! the group also modifies the transform-origin for the nested elements, which will be rotated from the center of the graphic
+                            -->
+                            <g transform="translate(37.5 0)">
+                                <circle
+                                    cx="0"
+                                    cy="8"
+                                    r="8">
+                                </circle>
+                                <!-- circle animated alongside the bell
+                                ! the rotation occurs from the point described by the parent group
+                                -->
+                                <circle
+                                    class="bell__clapper"
+                                    cx="0"
+                                    cy="63"
+                                    r="12">
+                                </circle>
+                                <!-- bell shape
+                                ! the rotation occurs from the point described by the parent group
+                                -->
+                                <path
+                                    class="bell__body"
+                                    stroke-linejoin="round"
+                                    d="M 0 8 a 25 25 0 0 1 25 25 v 17 l 5 6 q 3 7 -6 7 h -48 q -9 0 -6 -7 l 5 -6 v -17 a 25 25 0 0 1 25 -25">
+                                </path>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            
+                <!-- message displaying the notification
+                include modifiers to change the style of the message
+                message--info
+                message--success
+                message--warning
+                message--danger
+            
+                ! add a button to dismiss the message to the side
+                -->
+                <div class="notification__message message--info">
+                    <h1>Info</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            
+                    <!-- x icon through a path element -->
+                    <button aria-labelledby="button-dismiss">
+                        <span id="button-dismiss" hidden>Dismiss</span>
+                        <svg viewBox="0 0 100 100" width="10" height="10">
+                            <!-- group to style the path -->
+                            <g
+                                stroke="currentColor"
+                                stroke-width="6"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                fill="none">
+                                <!-- group to center and rotate the + sign to show an x sign instead -->
+                                <g transform="translate(50 50) rotate(45)">
+                                    <!-- path describing two perpendicular lines -->
+                                    <path
+                                        d="M 0 -30 v 60 z M -30 0 h 60">
+                                    </path>
+                                </g>
+                            </g>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div id="dashboard" class="section">
+                    <h2>Dashboard</h2>
+                    <div id="dashboard-content"></div>
+                </div>
+                <div id="contacts" class="section d-none">
+                    <h2>Контакты</h2>
+                    <div id="contacts-content"></div>
+                </div>
+                <div id="partners" class="section d-none">
+                    <h2>Контрагенты</h2>
+                    <div id="partners-content"></div>
+                </div>
+                <div id="employees" class="section d-none">
+                    <h2>Сотрудники</h2>
+                    <div id="employees-content"></div>
+                </div>
+                <div id="products" class="section d-none">
+                    <h2>Товары</h2>
+                    <div id="products-content"></div>
+                </div>
+                <div id="tasks" class="section d-none">
+                    <h2>Задачи</h2>
+                    <div id="tasks-content"></div>
+                </div>
+                <div id="orders" class="section d-none">
+                    <h2>Заказы</h2>
+                    <div id="orders-content"></div>
+                </div>
+                <div id="mails" class="section d-none">
+                    <h2>Почта</h2>
+                    <div id="mails-content"></div>
+                </div>
+                <div id="account" class="section d-none">
+                    <h2>Аккаунт</h2>
+                    <div id="account-content"></div>
+                </div>
+                <div id="support" class="section d-none">
+                    <h2>Support</h2>
+                    <div id="support-content"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">Настройки</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="theme-select">Тема:</label>
+                        <select class="form-control theme-select" id="theme-select" onchange="toggleTheme()">
+                            <option value="light">Светлая</option>
+                            <option value="dark">Темная</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
+    <script src="localstorage.js"></script>
+</body>
+</html>
+
